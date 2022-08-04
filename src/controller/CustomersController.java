@@ -45,13 +45,7 @@ import static Access.CustomersAcc.getAllCustomers;
 
      @Override
      public void initialize(URL url, ResourceBundle resourceBundle) {
-         try {
-             Connection connection = SQLDBConn.getConnection();
 
-             ObservableList<Countries> allCountries = CountryAcc.getCountries();
-             ObservableList<String> countryNames = FXCollections.observableArrayList();
-             ObservableList<StateProvince> allFirstLevelDivList = StateProvinceAcc.getAllFirstLevelDiv();
-             ObservableList<String> firstLevelDivisionAllNames = FXCollections.observableArrayList();
              ObservableList<Customers> allCustomersList = getAllCustomers();
 
              customerRecordsTableID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
@@ -64,10 +58,9 @@ import static Access.CustomersAcc.getAllCustomers;
 
              customerRecordsTable.setItems(allCustomersList);
 
-         } catch (Exception e) {
-             e.printStackTrace();
+
          }
-     }
+
 
      /**
       * Method to go back to main menu when back to main menu button is pressed.

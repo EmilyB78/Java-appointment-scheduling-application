@@ -22,57 +22,31 @@ public class Customers {
         return divisionName;
     }
 
-    public void setDivisionName(String divisionName) {
-        this.divisionName = divisionName;
-    }
-
     public int getDivisionID() {
         return divisionID;
-    }
-
-    public void setDivisionID(int divisionID) {
-        this.divisionID = divisionID;
     }
 
     public int getCustomerID() {
         return customerID;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
     public String getCustomerName(){
         return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
     }
 
     public String getCustomerAddress(){
         return customerAddress;
     }
 
-    public void setCustomerAddress(String customerAddress) {
-        this.customerAddress = customerAddress;
-    }
-
     public String getCustomerPostalCode(){
         return customerPostalCode;
-    }
-
-    public void setCustomerPostalCode(String customerPostalCode) {
-        this.customerPostalCode = customerPostalCode;
     }
 
     public String getCustomerPhonenumber(){
         return customerPhonenumber;
     }
 
-    public void setCustomerPhonenumber(String customerPhonenumber) {
-        this.customerPhonenumber = customerPhonenumber;
     }
-}
 
 
 

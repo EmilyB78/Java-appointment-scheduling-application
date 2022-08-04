@@ -12,16 +12,10 @@ public class Contacts {
         return contactsID;
     }
 
-    public void setContactsID(int contactsID) {
-        this.contactsID = contactsID;
-    }
 
     public String getContactsName() {
         return contactsName;
     }
 
-    public void setContactsName(String contactsName) {
 
-        this.contactsName = contactsName;
-    }
 }

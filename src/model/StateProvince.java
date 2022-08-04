@@ -12,20 +12,14 @@ public class StateProvince {
         int divisionID = this.divisionID;
         return divisionID;
     }
-    public void setDivisionID(int divisionID) {
-        this.divisionID = divisionID;
-    }
+
     public String getDivisionName(){
         return divisionName;
     }
-    public void setDivisionName(String divisionName) {
-        this.divisionName = divisionName;
-    }
+
     public int getCountry_ID() {
         return country_ID;
     }
-    public void setCountry_ID(int country_ID) {
-        this.country_ID = country_ID;
-    }
+
 
 }
