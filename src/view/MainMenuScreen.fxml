@@ -3,10 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane onDragDetected="#onActionExit" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
     <children>
-        <Button layoutX="264.0" layoutY="124.0" mnemonicParsing="false" onAction="#onActionDisplayAppointments" text="Appointments" />
-        <Button layoutX="264.0" layoutY="167.0" mnemonicParsing="false" text="Customers" />
+        <Button layoutX="264.0" layoutY="167.0" mnemonicParsing="false" onAction="#onActionDisplayCustomers" text="Customers" />
         <Button layoutX="264.0" layoutY="214.0" mnemonicParsing="false" text="Reports" />
-        <Button layoutX="517.0" layoutY="341.0" mnemonicParsing="false" text="Exit" />
+      <Button layoutX="264.0" layoutY="126.0" mnemonicParsing="false" onAction="#onActionDisplayAppointments" text="Appointments" />
     </children></AnchorPane>

@@ -31,7 +31,7 @@
          </toggleGroup></RadioButton>
       <RadioButton fx:id="appointmentMonthRadio" layoutX="199.0" layoutY="35.0" mnemonicParsing="false" onAction="#appointmentMonthSelected" prefHeight="17.0" prefWidth="115.0" text="View by Month" toggleGroup="$AppointmentsTG" />
       <Button fx:id="editAppointment" layoutX="395.0" layoutY="9.0" mnemonicParsing="false" onAction="#onActionDisplayAppointmentsEditScreen" prefHeight="25.0" prefWidth="60.0" text="Edit" />
-      <Button fx:id="deleteAppointment" layoutX="321.0" layoutY="9.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" prefWidth="60.0" text="Delete" />
+      <Button fx:id="deleteAppointment" layoutX="321.0" layoutY="9.0" mnemonicParsing="false" onAction="#onActionDeleteAppointment" prefHeight="25.0" prefWidth="60.0" text="Delete" />
       <Button fx:id="addAppointment" layoutX="467.0" layoutY="9.0" mnemonicParsing="false" onAction="#onActionDisplayAppointmentsAddScreen" prefHeight="25.0" prefWidth="60.0" text="Add" />
       <Button fx:id="backToMainMenu" layoutX="539.0" layoutY="9.0" mnemonicParsing="false" onAction="#onActionDisplayMainMenu" prefHeight="25.0" prefWidth="131.0" text="Return to Main Menu" />
    </children>

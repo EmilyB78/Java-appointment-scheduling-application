@@ -88,6 +88,21 @@ public class AppointmentsController implements Initializable {
         stage.setScene(scene);
         stage.show();    }
 
+    /**
+     * This method is temporarily set to go back to the main menu
+     * @param event
+     * @throws IOException
+     */
+
+    @FXML
+    void onActionDeleteAppointment (ActionEvent event) throws IOException {
+        Parent one = FXMLLoader.load(getClass().getResource("/view/MainMenuScreen.fxml"));
+        Scene scene = new Scene(one);        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
      /**
       * method to select appointment to edit and move to edit screen by button push
       * @param event
