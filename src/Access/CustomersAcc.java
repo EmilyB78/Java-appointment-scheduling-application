@@ -14,14 +14,16 @@ public class CustomersAcc {
     public static ObservableList<Customers> getAllCustomers(){
         ObservableList<Customers> customerslist = FXCollections.observableArrayList();
         try {
-            String sql  = "SELECT customers.Customer_ID, customer.Customer_Name, customer.Address, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Division from customers INNER JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
+            String sql  = "SELECT customers.Customer_ID, customer.Customer_Name, customer.Address, customer.State, customer.Country, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Division from customers INNER JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
             PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 int customerID = rs.getInt("Customer_ID");
                 String customerName = rs.getString("Customer_Name");
                 String customerAddress = rs.getString("Address");
+                String customerState = rs.getString("State");
                 String customerPostalCode = rs.getString("Postal_Code");
+                String customerCountry = rs.getString("Country");
                 String customerPhone = rs.getString("Phone");
                 int divisionID = rs.getInt("Division_ID");
                 String divisionName = rs.getString("Division");
@@ -34,4 +36,10 @@ public class CustomersAcc {
             throwables.printStackTrace();
         }        return customerslist;
     }
+
+    /**@Override
+    public String toString(){
+        //return (customerCountry + Country)
+    }
+    **/
 }

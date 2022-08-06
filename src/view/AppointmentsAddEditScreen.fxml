@@ -21,7 +21,6 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -31,25 +30,23 @@
             <TextField fx:id="editAppointmentDescription" layoutX="89.0" layoutY="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="editAppointmentLocation" layoutX="89.0" layoutY="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="editAppointmentType" layoutX="89.0" layoutY="108.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="editAppointmentCustomerID" layoutX="89.0" layoutY="210.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <TextField fx:id="editAppointmentUserID" layoutX="89.0" layoutY="244.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
             <Label text="Title" GridPane.rowIndex="1" />
             <Label text="Description" GridPane.rowIndex="2" />
             <Label text="Location" GridPane.rowIndex="3" />
             <Label GridPane.rowIndex="4" />
             <Label text="Type" GridPane.rowIndex="5" />
             <Label text="Start Date " GridPane.rowIndex="6" />
-            <Label text="End Date " GridPane.rowIndex="8" />
-            <Label text="CustID" GridPane.rowIndex="10" />
-            <Label text="UserID" GridPane.rowIndex="11" />
+            <Label text="CustID" GridPane.rowIndex="9" />
+            <Label text="UserID" GridPane.rowIndex="10" />
             <Label text="Contact" GridPane.rowIndex="4" />
             <ComboBox fx:id="editAppointmentContact" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <DatePicker fx:id="editAppointmentStartDate" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <DatePicker fx:id="editAppointmentEndDate" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <Label text="Start Time" GridPane.rowIndex="7" />
-            <Label text="End Time" GridPane.rowIndex="9" />
-            <ComboBox fx:id="editAppointmentStartTime" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <ComboBox fx:id="editAppointmentEndTime" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Label text="End Time" GridPane.rowIndex="8" />
+            <ComboBox fx:id="editAppointmentStartTime" onAction="#onActionEditAppointmentStartTime" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <ComboBox fx:id="editAppointmentEndTime" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
          </children>
       </GridPane>
       <Label layoutX="38.0" layoutY="38.0" prefHeight="33.0" prefWidth="113.0" text="Edit Appointment" />
@@ -70,7 +67,6 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Label prefHeight="17.0" prefWidth="54.0" text="ApptID" />
@@ -80,23 +76,21 @@
             <Label text="Contact" GridPane.rowIndex="4" />
             <Label text="Type" GridPane.rowIndex="5" />
             <Label text="Start Date " GridPane.rowIndex="6" />
-            <Label text="End Date " GridPane.rowIndex="8" />
-            <Label text="CustID" GridPane.rowIndex="10" />
-            <Label text="UserID" GridPane.rowIndex="11" />
+            <Label text="CustID" GridPane.rowIndex="9" />
+            <Label text="UserID" GridPane.rowIndex="10" />
             <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="addAppointmentID" GridPane.columnIndex="1" />
             <TextField fx:id="addAppointmentTitle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="addAppointmentDescription" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="addAppointmentLocation" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="addAppointmentType" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="addAppointmentCustomerID" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <TextField fx:id="addAppoinrmentUserID" GridPane.columnIndex="1" GridPane.rowIndex="11" />
             <Label text="Start Time" GridPane.rowIndex="7" />
-            <Label text="End Time" GridPane.rowIndex="9" />
+            <Label text="End Time" GridPane.rowIndex="8" />
             <ComboBox fx:id="addAppointmentStartTime" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <ComboBox fx:id="addAppointmentEndTime" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <DatePicker fx:id="addAppointmentEndDate" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <ComboBox fx:id="addAppointmentEndTime" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <DatePicker fx:id="addAppointmentStartDate" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
          </children>
       </GridPane>
       <Label layoutX="340.0" layoutY="46.0" prefHeight="17.0" prefWidth="113.0" text="Add Appointment" />
