@@ -52,8 +52,9 @@ import static Access.CustomersAcc.getAllCustomers;
              customerRecordsTableName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
              customerRecordsTableAddress.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
              customerRecordsTablePostalCode.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
-             customerRecordsTablePhone.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
+             customerRecordsTablePhone.setCellValueFactory(new PropertyValueFactory<>("customerPhonenumber"));
              customerRecordsTableState.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+             customerRecordsTableCountry.setCellValueFactory(new PropertyValueFactory<>("CustomerCountry"));
 
 
              customerRecordsTable.setItems(allCustomersList);
@@ -82,7 +83,7 @@ import static Access.CustomersAcc.getAllCustomers;
       */
 
      @FXML
-     void onActionCustomerAddScreen(ActionEvent event) throws IOException { Parent addParts = FXMLLoader.load(getClass().getResource("../views/CustomerAddScreen.fxml"));
+     void onActionCustomerAddScreen(ActionEvent event) throws IOException { Parent addParts = FXMLLoader.load(getClass().getResource("/view/CustomerAddScreen.fxml"));
          Scene scene = new Scene(addParts);
          Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
          window.setScene(scene);

@@ -11,10 +11,12 @@ import model.StateProvince;
 import java.sql.*;
 
 public class StateProvinceAcc {
-    public static ObservableList<StateProvince> getAllFirstLevelDiv(){
+    public static ObservableList<StateProvince> getAllFirstLevelDiv(int countryID){
         ObservableList<StateProvince> FirstLevelDivlist = FXCollections.observableArrayList();
-        try {        String sql  = "SELECT * from first_level_divisions";
+        try {        String sql  = "SELECT * from first_level_divisions where Country_ID = ?";
+
             PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sql);
+            ps.setInt(1,countryID);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 int divisionID = rs.getInt("Division_ID");

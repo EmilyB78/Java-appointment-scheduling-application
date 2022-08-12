@@ -21,5 +21,10 @@ public class StateProvince {
         return country_ID;
     }
 
+    @Override
+    public String toString (){
+        return divisionName;
+    }
+
 
 }

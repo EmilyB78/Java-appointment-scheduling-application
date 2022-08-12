@@ -1,6 +1,5 @@
 package controller;
 
-import SQLDatabase.SQLDBConn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,10 +14,8 @@ import model.Appointments;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.*;
-import java.util.Optional;
 
 import static Access.AppointmentsAcc.getAllAppointments;
 
@@ -118,7 +115,7 @@ public class AppointmentsController implements Initializable {
         if (appointmentsToModify == null) {
             displayAlert(1);
         } else {
-            Parent one = FXMLLoader.load(getClass().getResource("/view/AppointmentsAddEditScreen.fxml"));
+            Parent one = FXMLLoader.load(getClass().getResource("/view/AppointmentsAddScreen.fxml"));
             Scene scene = new Scene(one);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -146,7 +143,7 @@ public class AppointmentsController implements Initializable {
       */
 
     @FXML
-    void onActionDisplayAppointmentsAddScreen(ActionEvent event) throws IOException { Parent addParts = FXMLLoader.load(getClass().getResource("../views/AppointmentsAddEditScreen.fxml"));
+    void onActionDisplayAppointmentsAddScreen(ActionEvent event) throws IOException { Parent addParts = FXMLLoader.load(getClass().getResource("/view/AppointmentsAddScreen.fxml"));
         Scene scene = new Scene(addParts);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);

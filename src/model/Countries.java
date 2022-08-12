@@ -16,4 +16,9 @@ public class Countries {
         return countryName;
     }
 
+    @Override
+    public String toString (){
+        return countryName;
+    }
+
     }

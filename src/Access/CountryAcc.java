@@ -16,16 +16,21 @@ public class CountryAcc {
      * @throws SQLException
      * @return countriesObservableList
      */
-    public static ObservableList<Countries> getCountries() throws SQLException {
+    public static ObservableList<Countries> getCountries()  {
         ObservableList<Countries> countriesObservableList = FXCollections.observableArrayList();
-        String sql = "SELECT Country_ID, Country from countries";
-        PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            int countryID = rs.getInt("Country_ID");
-            String countryName = rs.getString("Country");
-            Countries country = new Countries(countryID, countryName);
-            countriesObservableList.add(country);
+        try {
+            String sql = "SELECT Country_ID, Country from countries";
+            PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int countryID = rs.getInt("Country_ID");
+                String countryName = rs.getString("Country");
+                Countries country = new Countries(countryID, countryName);
+                countriesObservableList.add(country);
+            }
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
         }
         return countriesObservableList;
     }

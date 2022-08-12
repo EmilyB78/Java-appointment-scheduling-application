@@ -2,61 +2,66 @@
 
 public class Customers {
 
-    public String divisionName;
-    private int divisionID;
+
     private int customerID;
     private String customerName;
     private String customerAddress;
     private String customerPostalCode;
     private String customerPhonenumber;
-    private String customerState;
+    private int divisionID;
+    private String divisionName;
+    private int  countryID;
     private String customerCountry;
 
-    public Customers(String divisionName, int divisionID, int customerID, String customerName, String customerAddress, String customerState, String customerCountry, String customerPostalCode, String customerPhonenumber){
-        this.divisionName = divisionName;
-        this.divisionID = divisionID;
+    public Customers(int customerID, String customerName, String customerAddress, String customerPostalCode, String customerPhonenumber, int divisionID, String divisionName, int countryID, String customerCountry) {
         this.customerID = customerID;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerPostalCode = customerPostalCode;
         this.customerPhonenumber = customerPhonenumber;
-        this.customerState = customerState;
+        this.divisionID = divisionID;
+        this.divisionName = divisionName;
+        this.countryID = countryID;
         this.customerCountry = customerCountry;
-    }
-    public String getDivisionName(){
-        return divisionName;
-    }
-
-    public int getDivisionID() {
-        return divisionID;
     }
 
     public int getCustomerID() {
         return customerID;
     }
 
-    public String getCustomerName(){
+    public String getCustomerName() {
         return customerName;
     }
 
-    public String getCustomerAddress(){
+    public String getCustomerAddress() {
         return customerAddress;
     }
 
-    public String getCustomerPostalCode(){
+    public String getCustomerPostalCode() {
         return customerPostalCode;
     }
 
-    public String getCustomerPhonenumber(){
+    public String getCustomerPhonenumber() {
         return customerPhonenumber;
     }
 
-    public String getCustomerState( ){return customerState;}
+    public int getDivisionID() {
+        return divisionID;
+    }
+
+    public String getDivisionName() {
+        return divisionName;
+    }
+
+    public int getCountryID() {
+        return countryID;
+    }
 
     public String getCustomerCountry() {
         return customerCountry;
     }
 }
+
 
 
 
