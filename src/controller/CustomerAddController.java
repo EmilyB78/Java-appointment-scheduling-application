@@ -3,6 +3,7 @@ package controller;
 import Access.CountryAcc;
 import Access.CustomersAcc;
 import Access.StateProvinceAcc;
+import SQLDatabase.SQLDBConn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +20,11 @@ import model.StateProvince;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -118,30 +123,42 @@ public class CustomerAddController implements Initializable {
      * @return
      */
     @FXML
-    Customers onActionCustomerAddSave(ActionEvent event) {
+    Customers onActionCustomerAddSave(ActionEvent event) throws IOException {
 
-        String sql = "INSERT into customers where Customer_ID =?, Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ?";
 
         try {
+
+            String sql = "INSERT into customers SET (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID)" + "VALUES (NULL, ?,?,?,?,?";
+
+            PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt("Customer_ID"));
+            ps.setString(2, "Customer_Name");
+            ps.setString(3, "Address");
+            ps.setString(4, "Postal_code");
+            ps.setString(5, "Phone");
+            ps.setInt(6, Integer.parseInt("Division_ID"));
+            ResultSet rs = ps.executeQuery();
 
             String name = customerNameAdd.getText();
             String phone = customerPhoneAdd.getText();
             String address = customerAddressAdd.getText();
             String state = String.valueOf(customerStateAdd.getItems());
-            String country = String.valueOf(customerCountryAdd.getItems());
+            String code = String.valueOf(customerPostalAdd.getText());
 
 
-            Customers customers = new Customers(String name, String phone, String address, String state, String country);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
 
+            Parent one = FXMLLoader.load(getClass().getResource("/view/CustomersController.fxml"));
+            Scene scene = new Scene(one);
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
 
-            ObservableList<CustomersAcc> customerslist = FXCollections.observableArrayList();
+            stage.setScene(scene);
 
+            stage.show();
 
-        } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            return customerslist;
-
+        }
+        return null;
     }
 
     public void onActionCustomerBackAdd(ActionEvent event) {
