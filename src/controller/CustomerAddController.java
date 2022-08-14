@@ -20,10 +20,7 @@ import model.StateProvince;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -125,8 +122,20 @@ public class CustomerAddController implements Initializable {
     @FXML
     Customers onActionCustomerAddSave(ActionEvent event) throws IOException {
 
-
+        // 1. Get the data from the GUI
         try {
+            Connection connection = SQLDBConn.getConnection();
+
+            String name = customerNameAdd.getText();
+            String phone = customerPhoneAdd.getText();
+            String address = customerAddressAdd.getText();
+            String state = String.valueOf(customerStateAdd.getItems());
+            String code = String.valueOf(customerPostalAdd.getText());
+
+            // 2. Validate the data
+
+
+            // 3. Insert data into data base
 
             String sql = "INSERT into customers SET (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID)" + "VALUES (NULL, ?,?,?,?,?";
 
@@ -137,31 +146,31 @@ public class CustomerAddController implements Initializable {
             ps.setString(4, "Postal_code");
             ps.setString(5, "Phone");
             ps.setInt(6, Integer.parseInt("Division_ID"));
-            ResultSet rs = ps.executeQuery();
-
-            String name = customerNameAdd.getText();
-            String phone = customerPhoneAdd.getText();
-            String address = customerAddressAdd.getText();
-            String state = String.valueOf(customerStateAdd.getItems());
-            String code = String.valueOf(customerPostalAdd.getText());
+            ps.execute();
 
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            // 4. Switch to main screen
 
-            Parent one = FXMLLoader.load(getClass().getResource("/view/CustomersController.fxml"));
-            Scene scene = new Scene(one);
+            Parent root = FXMLLoader.load(getClass().getResource("/view/CustomersController.fxml"));
+            Scene scene = new Scene(root);
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
 
             stage.setScene(scene);
 
             stage.show();
 
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+
+
         }
         return null;
     }
-
-    public void onActionCustomerBackAdd(ActionEvent event) {
-    }
 }
+
+
+
+
+
 
