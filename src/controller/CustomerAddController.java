@@ -167,6 +167,9 @@ public class CustomerAddController implements Initializable {
         }
         return null;
     }
+
+    public void onActionCustomerBackAdd(ActionEvent event) {
+    }
 }
 
 
