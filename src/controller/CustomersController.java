@@ -19,6 +19,9 @@ import model.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static Access.CustomersAcc.getAllCustomers;
@@ -97,7 +100,29 @@ import static Access.CustomersAcc.getAllCustomers;
       */
      @FXML
      void onActionDisplayCustomerEditScreen(ActionEvent event) throws IOException {
-// method where a selected customer's information is provided to another controller.
+         Customers customersToModify = customerRecordsTable.getSelectionModel().getSelectedItem();
+
+         if (customersToModify == null) {
+             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer.");
+             Optional<ButtonType> result = alert.showAndWait();
+             return;
+
+         }
+
+
+         FXMLLoader loader = new FXMLLoader();
+         loader.setLocation(getClass().getResource("/view/CustomerEditScreen.fxml"));
+         loader.load();
+
+         CustomerEditController MPMController = loader.getController();
+         MPMController.sendCustomers(customersToModify);
+
+         Parent one = loader.getRoot();
+         Scene scene = new Scene(one);
+         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+         stage.setScene(scene);
+         stage.show();
+
 
      }
 
@@ -109,6 +134,44 @@ import static Access.CustomersAcc.getAllCustomers;
      @FXML
      void onActionDeleteCustomer (ActionEvent event) throws IOException {
 
+         Customers customersToDelete = customerRecordsTable.getSelectionModel().getSelectedItem();
+
+         if (customersToDelete == null) {
+             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer.");
+             Optional<ButtonType> result = alert.showAndWait();
+             return;
+
+         }
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you certain you wish to delete this record?");
+         Optional<ButtonType> result = alert.showAndWait();
+
+         if(result.get() ==  ButtonType.OK) {
+             String sqla = "Delete from appointments where customer_ID = ?";
+             String sqlc = "Delete from customers where customer_ID = ?";
+
+             try {
+
+
+                 PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sqla);
+                 ps.setInt(1, customersToDelete.getCustomerID());
+
+                 ps.execute();
+
+                 PreparedStatement psc = SQLDBConn.getConnection().prepareStatement(sqlc);
+                 psc.setInt(1, customersToDelete.getCustomerID());
+
+                 psc.execute();
+
+                 Alert alertc = new Alert(Alert.AlertType.INFORMATION, "You have deleted " + customersToDelete.getCustomerName());
+                 Optional<ButtonType> resultc = alertc.showAndWait();
+
+
+             } catch (SQLException ex) {
+                 ex.printStackTrace();
+             }
+             customerRecordsTable.setItems(getAllCustomers());
+
+         }
      }
 
 

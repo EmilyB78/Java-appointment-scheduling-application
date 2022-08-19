@@ -39,9 +39,11 @@ public class MainMenuController implements Initializable {
        @FXML
        void onActionDisplayAppointments(ActionEvent event) throws IOException {
            Parent one = FXMLLoader.load(getClass().getResource("/view/AppointmentsScreen.fxml"));
-           Scene scene = new Scene(one);        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+           Scene scene = new Scene(one);
+           Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
            stage.setScene(scene);
-           stage.show();    }
+           stage.show();
+       }
     /**     * Loads the Customers controller.
      *  *     * @param event Add button action.
      *  * @throws IOException From FXMLLoader.

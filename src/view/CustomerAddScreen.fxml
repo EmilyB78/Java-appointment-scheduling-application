@@ -42,7 +42,7 @@
          </children>
       </GridPane>
       <Button fx:id="customerAddSave" layoutX="375.0" layoutY="361.0" mnemonicParsing="false" onAction="#onActionCustomerAddSave" text="Save" />
-      <Button fx:id="customerAddBack" layoutX="463.0" layoutY="361.0" mnemonicParsing="false" onAction="#onActionCustomerBackAdd" text="Back" />
+      <Button fx:id="customerAddBack" layoutX="463.0" layoutY="361.0" mnemonicParsing="false" onAction="#onActionCustomerAddBack" text="Back" />
       <Label layoutX="26.0" layoutY="26.0" prefHeight="45.0" prefWidth="186.0" text="Add Customer">
          <font>
             <Font size="18.0" />

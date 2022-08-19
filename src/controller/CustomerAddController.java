@@ -74,16 +74,6 @@ public class CustomerAddController implements Initializable {
 
         StringBuilder cs = new StringBuilder("");
 
-
-
-        /**Callback<ListView<Customers>, ListCell<Customers>> factory = lv -> new ListCell<Customers>(){
-            @Override
-            protected void updateItem(Customers item, boolean empty){
-                super.updateItem(item,empty);
-                setText(empty ? "Nothing" : ("Use : " + item.getCustomerState()));
-            }
-        };
-         **/
     }
     public void onActionCustomerCountryAdd (ActionEvent event) throws IOException {
 
@@ -111,47 +101,64 @@ public class CustomerAddController implements Initializable {
         }
     }
 
-    /**
-     * Method to add customer when button is clicked.
-     *
-     *
-     *
-     * @param event
-     * @return
-     */
+
     @FXML
-    Customers onActionCustomerAddSave(ActionEvent event) throws IOException {
+    public void onActionCustomerAddSave(ActionEvent event) throws IOException {
 
         // 1. Get the data from the GUI
         try {
-            Connection connection = SQLDBConn.getConnection();
 
             String name = customerNameAdd.getText();
             String phone = customerPhoneAdd.getText();
             String address = customerAddressAdd.getText();
-            String state = String.valueOf(customerStateAdd.getItems());
-            String code = String.valueOf(customerPostalAdd.getText());
+            StateProvince state = customerStateAdd.getValue();
+            String postalCode = customerPostalAdd.getText();
 
             // 2. Validate the data
+            if (name.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter customer name.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
+            if (phone.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter customer phone number.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
+            if (address.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter customer address.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
+            if(state == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a state/province.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
+            if (postalCode.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter customer postal code.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
 
 
             // 3. Insert data into data base
 
-            String sql = "INSERT into customers SET (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID)" + "VALUES (NULL, ?,?,?,?,?";
+            String sql = "INSERT into customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID)" + "VALUES (NULL, ?,?,?,?,?)";
 
             PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sql);
-            ps.setInt(1, Integer.parseInt("Customer_ID"));
-            ps.setString(2, "Customer_Name");
-            ps.setString(3, "Address");
-            ps.setString(4, "Postal_code");
-            ps.setString(5, "Phone");
-            ps.setInt(6, Integer.parseInt("Division_ID"));
+            ps.setString(1, name);
+            ps.setString(2, address);
+            ps.setString(3, postalCode);
+            ps.setString(4, phone);
+            ps.setInt(5, state.getDivisionID());
+
             ps.execute();
 
 
             // 4. Switch to main screen
 
-            Parent root = FXMLLoader.load(getClass().getResource("/view/CustomersController.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/CustomersScreen.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
 
@@ -165,11 +172,10 @@ public class CustomerAddController implements Initializable {
 
 
         }
-        return null;
+        return;
     }
 
-    public void onActionCustomerBackAdd(ActionEvent event) {
-    }
+
 }
 
 

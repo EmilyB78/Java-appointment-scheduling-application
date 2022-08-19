@@ -12,6 +12,7 @@ import model.Customers;
 import model.User;
 
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class AppointmentsAddController implements Initializable {
@@ -28,12 +29,21 @@ public class AppointmentsAddController implements Initializable {
         addAppointmentContact.setItems(ContactsAcc.getAllContacts());
         customerIDCB.setItems((CustomersAcc.getAllCustomers()));
         userIDCB.setItems(UserAcc.getAllUsers());
+
+        LocalTime start = LocalTime.of(8,0);
+        LocalTime end = LocalTime.of(22,0);
+
+        while(start.isBefore(end.plusSeconds(1))){
+            addAppointmentStartTime.getItems().add(start);
+            start = start.plusMinutes(10);
+        }
+        addAppointmentStartTime.getSelectionModel().select(LocalTime.of(8,0));
+        addAppointmentEndTime.getSelectionModel().select(LocalTime.of(22,0));
         
     }
 
     public void onActionSaveAppointment(ActionEvent event) {
     }
 
-    public void onActionEditAppointmentStartTime(ActionEvent event) {
-    }
+
 }

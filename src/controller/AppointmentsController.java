@@ -22,36 +22,54 @@ import static Access.AppointmentsAcc.getAllAppointments;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
 public class AppointmentsController implements Initializable {
 
 
-
-    @FXML private RadioButton allAppointmentRadio;
-    @FXML private RadioButton appointmentWeekRadio;
-    @FXML private RadioButton appointmentMonthRadio;
-    @FXML private TableView<Appointments> allAppointmentsTable;
-    @FXML private TableColumn<?, ?> appointmentContact;
-    @FXML private TableColumn<?, ?> appointmentCustomerID;
-    @FXML private TableColumn<?, ?> appointmentDescription;
-    @FXML private TableColumn<?, ?> appointmentEnd;
-    @FXML private TableColumn<?, ?> appointmentID;
-    @FXML private TableColumn<?, ?> appointmentLocation;
-    @FXML private TableColumn<?, ?> appointmentStart;
-    @FXML private TableColumn<?, ?> appointmentTitle;
-    @FXML private TableColumn<?, ?> appointmentType;
-    @FXML private TableColumn<?, ?> tableUserID;
-    @FXML private Button backToMainMenu;
-    @FXML private Button deleteAppointment;
-    @FXML private Button editAppointment;
-    @FXML private Button addAppointment;
+    @FXML
+    private RadioButton allAppointmentRadio;
+    @FXML
+    private RadioButton appointmentWeekRadio;
+    @FXML
+    private RadioButton appointmentMonthRadio;
+    @FXML
+    private TableView<Appointments> allAppointmentsTable;
+    @FXML
+    private TableColumn<?, ?> appointmentContact;
+    @FXML
+    private TableColumn<?, ?> appointmentCustomerID;
+    @FXML
+    private TableColumn<?, ?> appointmentDescription;
+    @FXML
+    private TableColumn<?, ?> appointmentEnd;
+    @FXML
+    private TableColumn<?, ?> appointmentID;
+    @FXML
+    private TableColumn<?, ?> appointmentLocation;
+    @FXML
+    private TableColumn<?, ?> appointmentStart;
+    @FXML
+    private TableColumn<?, ?> appointmentTitle;
+    @FXML
+    private TableColumn<?, ?> appointmentType;
+    @FXML
+    private TableColumn<?, ?> tableUserID;
+    @FXML
+    private Button backToMainMenu;
+    @FXML
+    private Button deleteAppointment;
+    @FXML
+    private Button editAppointment;
+    @FXML
+    private Button addAppointment;
 
 
     /**
-     *
      * Initialize controls and setup variables/observable lists.
+     *
      * @throws SQLException
      */
     @Override
@@ -73,38 +91,44 @@ public class AppointmentsController implements Initializable {
         allAppointmentsTable.setItems(allAppointmentsList);
     }
 
-     /**
-      * method to return to main menu by button push
-      * @param event
-      * @throws IOException
-      */
+    /**
+     * method to return to main menu by button push
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionDisplayMainMenu(ActionEvent event) throws IOException {
         Parent one = FXMLLoader.load(getClass().getResource("/view/MainMenuScreen.fxml"));
-        Scene scene = new Scene(one);        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(one);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
-        stage.show();    }
+        stage.show();
+    }
 
     /**
      * This method is temporarily set to go back to the main menu
+     *
      * @param event
      * @throws IOException
      */
 
     @FXML
-    void onActionDeleteAppointment (ActionEvent event) throws IOException {
+    void onActionDeleteAppointment(ActionEvent event) throws IOException {
         Parent one = FXMLLoader.load(getClass().getResource("/view/MainMenuScreen.fxml"));
-        Scene scene = new Scene(one);        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(one);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
 
     }
 
-     /**
-      * method to select appointment to edit and move to edit screen by button push
-      * @param event
-      * @throws IOException
-      */
+    /**
+     * method to select appointment to edit and move to edit screen by button push
+     *
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void onActionDisplayAppointmentsEditScreen(ActionEvent event) throws IOException {
@@ -113,28 +137,30 @@ public class AppointmentsController implements Initializable {
 
 
         if (appointmentsToModify == null) {
-            displayAlert(1);
-        } else {
-            Parent one = FXMLLoader.load(getClass().getResource("/view/AppointmentsAddScreen.fxml"));
-            Scene scene = new Scene(one);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-/*
-            AppointmentsAddEditController MPMController = loader.getController();
-            MPMController.sendSelectedItem(appointmentsToModify);
-
-            Parent one = loader.getRoot();
-            Scene scene = new Scene(one);
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-
- */
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an appointment.");
+            Optional<ButtonType> result = alert.showAndWait();
+            return;
 
         }
 
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/AppointmentsEditScreen.fxml"));
+        loader.load();
+
+        AppointmentsEditController AECController = loader.getController();
+        AECController.sendAppointments(appointmentsToModify);
+
+        Parent one = loader.getRoot();
+        Scene scene = new Scene(one);
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+
+
     }
+
+
 
      /**
       * method to go to screen to add a new appointment by button push
@@ -143,7 +169,9 @@ public class AppointmentsController implements Initializable {
       */
 
     @FXML
-    void onActionDisplayAppointmentsAddScreen(ActionEvent event) throws IOException { Parent addParts = FXMLLoader.load(getClass().getResource("/view/AppointmentsAddScreen.fxml"));
+    void onActionDisplayAppointmentsAddScreen(ActionEvent event) throws IOException {
+
+        Parent addParts = FXMLLoader.load(getClass().getResource("/view/AppointmentsAddScreen.fxml"));
         Scene scene = new Scene(addParts);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
