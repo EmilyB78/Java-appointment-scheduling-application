@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="413.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AppointmentsEditScreen">
+<AnchorPane fx:id="appointmentsEditBack" onDragDetected="#onActionAppointmentsEditBack" prefHeight="413.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsEditController">
    <children>
       <GridPane layoutX="46.0" layoutY="62.0" prefHeight="313.0" prefWidth="309.0">
         <columnConstraints>
@@ -49,5 +49,7 @@
          </children>
       </GridPane>
       <Label layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="110.0" text="Edit Appointment" />
+      <Button fx:id="appointmentsEditBack" layoutX="478.0" layoutY="375.0" mnemonicParsing="false" onAction="#onActionAppointmentsEditBack" prefHeight="25.0" prefWidth="46.0" text="Back " />
+      <Button layoutX="407.0" layoutY="375.0" mnemonicParsing="false" text="Save" />
    </children>
 </AnchorPane>

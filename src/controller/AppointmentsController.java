@@ -143,7 +143,6 @@ public class AppointmentsController implements Initializable {
 
         }
 
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/AppointmentsEditScreen.fxml"));
         loader.load();

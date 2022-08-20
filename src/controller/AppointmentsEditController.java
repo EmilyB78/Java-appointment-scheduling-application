@@ -1,14 +1,22 @@
 package controller;
 
+import Access.ContactsAcc;
+import Access.CustomersAcc;
+import Access.UserAcc;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.*;
 
+import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentsEditController implements Initializable {
@@ -28,9 +36,12 @@ public class AppointmentsEditController implements Initializable {
     @FXML
     private ComboBox<Contacts> editAppointmentContact;
     @FXML
-    private ComboBox<Countries> customerCountryEdit;
+    private ComboBox<Customers> editAppointmentCustID ;
     @FXML
-    private TextField customerPostalEdit;
+    private ComboBox<User>editAppointmentUserID;
+    @FXML
+    private DatePicker editAppointmentStartTime;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,15 +56,31 @@ public class AppointmentsEditController implements Initializable {
         editAppointmentDescription.setText(appointmentsToModify.getAppointmentDescription());
         editAppointmentDescription.setText(appointmentsToModify.getAppointmentDescription());
         editAppointmentType.setText(appointmentsToModify.getAppointmentType());
+        editAppointmentContact.setItems(ContactsAcc.getAllContacts());
+        editAppointmentCustID.setItems((CustomersAcc.getAllCustomers()));
+        editAppointmentUserID.setItems(UserAcc.getAllUsers());
 
-        for(Contacts co : editAppointmentContact.getItems()){
-
-            if(co.getContactsID() == appointmentsToModify.getContactID()){
-                editAppointmentContact.setValue(co);
-                break;
-            }
-        }
     }
 
 
+    public void onActionAppointmentsEditBack(ActionEvent event) throws IOException {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will return you to Main Appointment Records without saving, do you want to continue?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Parent one = FXMLLoader.load(getClass().getResource("/view/AppointmentsScreen.fxml"));
+            Scene scene = new Scene(one);
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+
+            stage.setScene(scene);
+
+            stage.show();
+        }
+    }
 }
+
+
+
+

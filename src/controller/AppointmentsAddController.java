@@ -4,15 +4,20 @@ import Access.ContactsAcc;
 import Access.CustomersAcc;
 import Access.UserAcc;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 import model.Contacts;
 import model.Customers;
 import model.User;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentsAddController implements Initializable {
@@ -43,6 +48,24 @@ public class AppointmentsAddController implements Initializable {
     }
 
     public void onActionSaveAppointment(ActionEvent event) {
+    }
+
+
+    public void onActionAppointmentsAddBack(ActionEvent event) throws IOException {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will return you to Main Appointments Records without saving, do you want to continue?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Parent one = FXMLLoader.load(getClass().getResource("/view/AppointmentsScreen.fxml"));
+            Scene scene = new Scene(one);
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+
+            stage.setScene(scene);
+
+            stage.show();
+        }
     }
 
 
