@@ -17,4 +17,9 @@ public class User {
 
     public String getUserPassword() {        return userPassword;    }
 
+    @Override
+    public String toString (){
+        return String.valueOf(userID);
+    }
+
 }

@@ -40,7 +40,8 @@ public class AppointmentsAddController implements Initializable {
 
         while(start.isBefore(end.plusSeconds(1))){
             addAppointmentStartTime.getItems().add(start);
-            start = start.plusMinutes(10);
+            addAppointmentEndTime.getItems().add(start);
+            start = start.plusMinutes(15);
         }
         addAppointmentStartTime.getSelectionModel().select(LocalTime.of(8,0));
         addAppointmentEndTime.getSelectionModel().select(LocalTime.of(22,0));

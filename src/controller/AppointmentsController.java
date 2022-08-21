@@ -85,7 +85,7 @@ public class AppointmentsController implements Initializable {
         appointmentStart.setCellValueFactory(new PropertyValueFactory<>("start"));
         appointmentEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         appointmentCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-        appointmentContact.setCellValueFactory(new PropertyValueFactory<>("Contact"));
+        appointmentContact.setCellValueFactory(new PropertyValueFactory<>("ContactID"));
         tableUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
         allAppointmentsTable.setItems(allAppointmentsList);

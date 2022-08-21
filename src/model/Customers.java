@@ -60,6 +60,11 @@ public class Customers {
     public String getCustomerCountry() {
         return customerCountry;
     }
+
+    @Override
+    public String toString (){
+        return String.valueOf(customerID);
+    }
 }
 
 

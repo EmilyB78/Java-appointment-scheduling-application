@@ -17,5 +17,10 @@ public class Contacts {
         return contactsName;
     }
 
+    @Override
+    public String toString (){
+        return String.valueOf(contactsID);
+    }
+
 
 }
