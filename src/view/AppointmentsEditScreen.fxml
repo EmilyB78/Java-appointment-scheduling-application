@@ -41,7 +41,7 @@
             <DatePicker fx:id="editAppointmentStartDate" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <ComboBox fx:id="editAppointmentStartTime" prefHeight="25.0" prefWidth="171.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <ComboBox fx:id="editAppointmentEndTime" prefHeight="25.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextField fx:id="editAppointmentID" GridPane.columnIndex="1" />
+            <TextField fx:id="editAppointmentID" editable="false" GridPane.columnIndex="1" />
             <TextField fx:id="editAppointmentTitle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="editAppointmentDescription" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="editAppointmentLocation" GridPane.columnIndex="1" GridPane.rowIndex="3" />

@@ -1,5 +1,6 @@
 package controller;
 
+import SQLDatabase.SQLDBConn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,13 +15,16 @@ import model.Appointments;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.*;
 
 import static Access.AppointmentsAcc.getAllAppointments;
+import static Access.CustomersAcc.getAllCustomers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import model.Customers;
 
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -115,11 +119,39 @@ public class AppointmentsController implements Initializable {
 
     @FXML
     void onActionDeleteAppointment(ActionEvent event) throws IOException {
-        Parent one = FXMLLoader.load(getClass().getResource("/view/MainMenuScreen.fxml"));
-        Scene scene = new Scene(one);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        Appointments appointmentsToDelete = allAppointmentsTable.getSelectionModel().getSelectedItem();
+
+        if (appointmentsToDelete == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer.");
+            Optional<ButtonType> result = alert.showAndWait();
+            return;
+
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you certain you wish to delete this appointment?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.get() ==  ButtonType.OK) {
+            String sqla = "Delete from appointments where appointment_ID = ?";
+
+
+            try {
+
+
+                PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sqla);
+                ps.setInt(1, appointmentsToDelete.getAppointmentID());
+
+                ps.execute();
+
+                Alert alertc = new Alert(Alert.AlertType.INFORMATION, "You have deleted " + appointmentsToDelete.getAppointmentID());
+                Optional<ButtonType> resultc = alertc.showAndWait();
+
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            allAppointmentsTable.setItems(getAllAppointments());
+
+        }
 
     }
 

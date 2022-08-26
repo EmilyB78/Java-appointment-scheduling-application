@@ -24,7 +24,7 @@
          <children>
             <ComboBox fx:id="customerCountryAdd" onAction="#onActionCustomerCountryAdd" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <ComboBox fx:id="customerStateAdd" onAction="#onActionCustomerStateAdd" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="customerIDAdd" disable="true" GridPane.columnIndex="1">
+            <TextField fx:id="customerIDAdd" disable="true" editable="false" GridPane.columnIndex="1">
                <effect>
                   <ColorAdjust />
                </effect></TextField>

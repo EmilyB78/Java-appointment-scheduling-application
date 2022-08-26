@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -74,8 +77,8 @@ public class AppointmentsEditController implements Initializable {
             editAppointmentEndTime.getItems().add(start);
             start = start.plusMinutes(15);
         }
-        editAppointmentStartTime.getSelectionModel().select(LocalTime.of(8, 0));
-        editAppointmentEndTime.getSelectionModel().select(LocalTime.of(22, 0));
+        editAppointmentStartTime.setValue(LocalTime.of(8, 0));
+        editAppointmentEndTime.setValue(LocalTime.of(22, 0));
 
 
         editAppointmentStartDate.setValue(appointmentsToModify.getStart().toLocalDate());
@@ -95,15 +98,16 @@ public class AppointmentsEditController implements Initializable {
                 editAppointmentUserID.setValue(u);
                 break;
             }
+        }
 
-            for (Contacts a : editAppointmentContact.getItems()) {
-                if (a.getContactsID() == appointmentsToModify.getContactID()) {
-                    editAppointmentContact.setValue(a);
-                    break;
-                }
+        for (Contacts a : editAppointmentContact.getItems()) {
+            if (a.getContactsID() == appointmentsToModify.getContactID()) {
+                editAppointmentContact.setValue(a);
+                break;
             }
         }
     }
+
 
         @FXML
         void onActionAppointmentsEditBack (ActionEvent event) throws IOException {
@@ -131,17 +135,36 @@ public class AppointmentsEditController implements Initializable {
             String title = editAppointmentTitle.getText();
             String description = editAppointmentDescription.getText();
             String location = editAppointmentLocation.getText();
-            int cid = Integer.parseInt(editAppointmentCustID.getId());
+
             String type = editAppointmentType.getText();
+            LocalDate startdate = editAppointmentStartDate.getValue();
             // enter start date
-            String start = String.valueOf(editAppointmentStartTime.getValue());
-            String end = String.valueOf(editAppointmentEndTime.getValue());
-            int cod = Integer.parseInt(editAppointmentContact.getId());
-            int uid = Integer.parseInt(editAppointmentUserID.getId());
+            LocalTime starttime = editAppointmentStartTime.getValue();
+            LocalTime endtime = editAppointmentEndTime.getValue();
+
+            Customers customers = editAppointmentCustID.getValue();
+            User users = editAppointmentUserID.getValue();
+            Contacts contacts = editAppointmentContact.getValue();
 
 
 
             // 2. Validate the data
+            if (customers == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
+            if (users == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a user.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
+            if (contacts == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a contact.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
+
             if (title.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter an appointment title.");
                 Optional<ButtonType> result = alert.showAndWait();
@@ -157,46 +180,52 @@ public class AppointmentsEditController implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 return;
             }
-            /**if (cid == null) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer ID.");
-                Optional<ButtonType> result = alert.showAndWait();
-                return;
-            }
-             **/
+
             if (type.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter an appointment type.");
                 Optional<ButtonType> result = alert.showAndWait();
                 return;
             }
-            if (start.isEmpty()) {
+            if (startdate == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a start date.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
+
+            if (starttime == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a start time.");
                 Optional<ButtonType> result = alert.showAndWait();
                 return;
             }
-
-            if (end.isEmpty()) {
+            if (endtime == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an end time.");
                 Optional<ButtonType> result = alert.showAndWait();
                 return;
             }
-            //alerts for customer ID and user ID
+
+            LocalDateTime start = LocalDateTime.of(startdate,starttime);
+            LocalDateTime end = LocalDateTime.of(startdate, endtime);
+            //need to validate for business hours
+            //need to validate for start before end
+            //validate for overlap based on cust Id
 
 
             // 3. Insert data into data base
 
-            String sql = "UPDATE appointments SET appointment_id = ?, title = ?, description = ?, location = ?, contact_id = ?, type = ?, start = ?, end = ?, customer_id = ?, user_id = ? WHERE appointment_ID = ?";
+            String sql = "UPDATE appointments SET title = ?, description = ?, location = ?, contact_id = ?, type = ?, start = ?, end = ?, customer_id = ?, user_id = ? WHERE appointment_ID = ?";
 
             PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.setString(2, title);
-            ps.setString(3, description);
-            ps.setString(4,location);
-            ps.setInt(5, cid);
-            ps.setString(6, type);
-            ps.setString(7, start);
-            ps.setString(8, end);
-            ps.setInt(9, cod);
-            ps.setInt(10,uid);
+
+            ps.setString(1, title);
+            ps.setString(2, description);
+            ps.setString(3,location);
+            ps.setInt(4,contacts.getContactsID());
+            ps.setString(5, type);
+            ps.setTimestamp(6, Timestamp.valueOf(start));
+            ps.setTimestamp(7, Timestamp.valueOf(end));
+            ps.setInt(8,customers.getCustomerID() );
+            ps.setInt(9,users.getUserID());
+            ps.setInt(10, id);
 
             ps.execute();
 
