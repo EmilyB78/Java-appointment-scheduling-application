@@ -1,8 +1,14 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+
 import java.time.LocalDateTime;
 
 public class Appointments {
+
+    public static ObservableList<String> monthlist = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
     private int appointmentID;
     private String appointmentTitle;
     private String appointmentDescription;

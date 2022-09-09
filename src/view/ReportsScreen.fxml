@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="517.0" prefWidth="679.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportsController">
+<AnchorPane prefHeight="517.0" prefWidth="681.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportsController">
    <children>
       <Label layoutX="217.0" layoutY="6.0" prefHeight="32.0" prefWidth="113.0" text="Reports">
          <font>
@@ -27,8 +27,13 @@
          <children>
             <ComboBox fx:id="monthMonthTypeReports" prefHeight="25.0" prefWidth="165.0" GridPane.columnIndex="1" />
             <ComboBox fx:id="typeMonthTypeReports" prefHeight="25.0" prefWidth="163.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="totalMonthTypeReports" prefHeight="25.0" prefWidth="146.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label prefHeight="17.0" prefWidth="67.0" text="Total" GridPane.rowIndex="2" />
+            <HBox prefHeight="28.0" prefWidth="134.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <TextField fx:id="totalMonthTypeReports" prefHeight="25.0" prefWidth="113.0" />
+                  <Button mnemonicParsing="false" onAction="#onActionViewMonthTypeReports" prefHeight="25.0" prefWidth="52.0" text="View" />
+               </children>
+            </HBox>
+            <Label prefHeight="17.0" prefWidth="90.0" text="Total" GridPane.rowIndex="2" />
             <Label text="Month" />
             <Label text="Type" GridPane.rowIndex="1" />
          </children>
@@ -72,5 +77,6 @@
             <TableColumn fx:id="userIDReports" prefWidth="59.33331298828125" text="User ID" />
         </columns>
       </TableView>
+      <Button layoutX="28.0" layoutY="20.0" mnemonicParsing="false" onAction="#onActionReportsBack" text="Back" />
    </children>
 </AnchorPane>

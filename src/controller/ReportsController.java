@@ -1,9 +1,14 @@
 package controller;
 
+import Access.AppointmentsAcc;
+import Access.ContactsAcc;
+import Access.CustomersAcc;
 import SQLDatabase.SQLDBConn;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -25,17 +30,17 @@ import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static Access.AppointmentsAcc.getAllAppointments;
+import static Access.AppointmentsAcc.*;
 
-public class ReportsController {
-    public ComboBox monthMonthTypeReports;
-    public ComboBox typeMonthTypeReports;
+public class ReportsController implements Initializable {
+    public ComboBox<String> monthMonthTypeReports;
+    public ComboBox<String> typeMonthTypeReports;
     public TextField totalMonthTypeReports;
-    public ComboBox contactContactScheduleReports;
-    public ComboBox customerCustomerScheduleReports;
+    public ComboBox<Contacts> contactContactScheduleReports;
+    public ComboBox<Customers> customerCustomerScheduleReports;
     public Button viewContactsScheduleReports;
     public Button viewCustomerScheduleReports;
-    public TableView ReportsAppointments;
+    public TableView<Appointments> ReportsAppointments;
     public TableColumn apptIDReports;
     public TableColumn titleReports;
     public TableColumn descriptionReports;
@@ -48,7 +53,7 @@ public class ReportsController {
     public TableColumn userIDReports;
 
 
-    private void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
         ObservableList<Appointments> allAppointmentsList = getAllAppointments();
 
@@ -64,69 +69,75 @@ public class ReportsController {
         userIDReports.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
         ReportsAppointments.setItems(allAppointmentsList);
+        contactContactScheduleReports.setItems(ContactsAcc.getAllContacts());
+        customerCustomerScheduleReports.setItems(CustomersAcc.getAllCustomers());
+        monthMonthTypeReports.setItems(Appointments.monthlist);
+        typeMonthTypeReports.setItems(getAllAppointmentsbyType());
 
     }
 
     public void onActionDisplayContactsSchedule(ActionEvent event) {
 
-        try {
-            String title = apptIDReports.getText();
-            String description = descriptionReports.getText();
-            String location = locationsReports.getText();
 
-            String type = typeReports.getText();
-
-            LocalTime starttime = startdatetimeReports.getValue();
-            LocalTime endtime = enddatetimeReports.getValue();
-
-            Customers customers = custIDReports.getText();
-            User users = userIDReports.getId();
-            Contacts contacts = contactContactScheduleReports.getValue();
-
-
+           Contacts contacts = contactContactScheduleReports.getValue();
 
             // 2. Validate the data
-            if (contacts == null) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a contact.");
-                Optional<ButtonType> result = alert.showAndWait();
-                return;
-            }
+           if (contacts == null) {
+               Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a contact.");
+               Optional<ButtonType> result = alert.showAndWait();
+               return;
+           }
 
-            LocalDateTime start = LocalDateTime.of(startdatetimeReports);
-            LocalDateTime end = LocalDateTime.of(enddatetimeReports);
-
+           ReportsAppointments.setItems(getAllAppointmentsbyContact(contacts.getContactsID()));
 
 
-            //Display schedule filtered by contact
-
-            String sql = "Select * from appointments where contact_ID = ?";
-
-            PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sql);
-
-            ps.setString(1, title);
-            ps.setString(2, description);
-            ps.setString(3,location);
-            ps.setInt(4,contacts.getContactsID());
-            ps.setString(5, type);
-            ps.setTimestamp(6, Timestamp.valueOf(start));
-            ps.setTimestamp(7, Timestamp.valueOf(end));
-            ps.setInt(8,customers.getCustomerID() );
-            ps.setInt(9,users.getUserID());
-
-            ps.execute();
-
-
-
-        } catch (SQLException | IOException ex) {
-            ex.printStackTrace();
-
-
-        }
-        return;
 
 
     }
 
     public void onActionDisplayCustomerSchedule(ActionEvent event) {
+
+        Customers customers = customerCustomerScheduleReports.getValue();
+
+        // 2. Validate the data
+        if (customers == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer.");
+            Optional<ButtonType> result = alert.showAndWait();
+            return;
+        }
+
+        ReportsAppointments.setItems(getAllAppointmentsbyCustomers(customers.getCustomerID()));
+
+
+
+
+    }
+
+    public void onActionReportsBack(ActionEvent event) throws IOException {
+
+        Parent one = FXMLLoader.load(getClass().getResource("/view/MainMenuScreen.fxml"));
+        Scene scene = new Scene(one);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void onActionViewMonthTypeReports(ActionEvent event) {
+
+        String month = monthMonthTypeReports.getValue();
+        String type = typeMonthTypeReports.getValue();
+
+        // 2. Validate the data
+        if (month == null || type == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a month and type.");
+            Optional<ButtonType> result = alert.showAndWait();
+            return;
+        }
+
+        totalMonthTypeReports.setText(AppointmentsAcc.getmonthtypecount(month, type));
+
+
+
+
     }
 }

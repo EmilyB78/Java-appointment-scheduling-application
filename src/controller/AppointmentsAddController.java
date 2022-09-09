@@ -1,9 +1,11 @@
 package controller;
 
+import Access.AppointmentsAcc;
 import Access.ContactsAcc;
 import Access.CustomersAcc;
 import Access.UserAcc;
 import SQLDatabase.SQLDBConn;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Appointments;
 import model.Contacts;
 import model.Customers;
 import model.User;
@@ -20,11 +23,11 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class AppointmentsAddController implements Initializable {
 
@@ -45,18 +48,38 @@ public class AppointmentsAddController implements Initializable {
         customerIDCB.setItems((CustomersAcc.getAllCustomers()));
         userIDCB.setItems(UserAcc.getAllUsers());
 
-        LocalTime start = LocalTime.of(8,0);
-        LocalTime end = LocalTime.of(22,0);
+        LocalTime start = LocalTime.of(8, 0);
+        LocalTime end = LocalTime.of(22, 0);
 
-        while(start.isBefore(end.plusSeconds(1))){
+        //make a local date time with start, use local data.now
+        LocalDate nydate = LocalDate.now();
+        LocalTime nytime = LocalTime.of(7,0);
+
+
+        //make a zoned date time from the local date time using atzone "America/New_York"
+        ZoneId nyZoneId = ZoneId.of("America/New_York");
+
+        //make another zone date time from that zone date time using method with zone same instant
+        ZonedDateTime nyZDT = ZonedDateTime.of(nydate, nytime, nyZoneId);
+
+        //use zone ID system default
+        ZoneId LocalZoneId = ZoneId.of(TimeZone.getDefault().getID());
+
+        //convert zoned date time to a local time
+        Instant nytotxInstant = nyZDT.toInstant();
+        ZonedDateTime nytoLocalZDT = nyZDT.withZoneSameInstant(LocalZoneId);
+
+
+
+
+        while (start.isBefore(end.plusSeconds(1))) {
             addAppointmentStartTime.getItems().add(start);
             addAppointmentEndTime.getItems().add(start);
             start = start.plusMinutes(15);
         }
-        addAppointmentStartTime.getSelectionModel().select(LocalTime.of(8,0));
-        addAppointmentEndTime.getSelectionModel().select(LocalTime.of(22,0));
-        
+
     }
+
 
     public void onActionSaveAppointment(ActionEvent event) {
         // 1. Get the data from the GUI
@@ -134,9 +157,42 @@ public class AppointmentsAddController implements Initializable {
 
             LocalDateTime start = LocalDateTime.of(startdate,starttime);
             LocalDateTime end = LocalDateTime.of(startdate, endtime);
+
             //need to validate for business hours
+
+
             //need to validate for start before end
-            //validate for overlap based on cust Id
+            if(!start.isBefore(end)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Start time must be before end time.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
+
+            //validate based on cust ID
+            ObservableList<Appointments> alllist = AppointmentsAcc.getAllAppointments();
+            boolean overlap = false;
+            for(Appointments appointments:alllist) {
+                if (appointments.getCustomerID() != customers.getCustomerID()) {
+                    continue;
+                }
+                LocalDateTime astart = appointments.getStart();
+                LocalDateTime aend = appointments.getEnd();
+                if(astart.isAfter(start) && astart.isBefore(end))
+                    overlap = true;
+                else if(astart.equals(start) || aend.equals(end))
+                    overlap = true;
+                else if(aend.isAfter(start) && aend.isBefore(end))
+                    overlap = true;
+                else if(astart.isBefore(start) && aend.isAfter(end))
+                    overlap = true;
+
+            }
+            if(overlap){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "You have an overlapping appointment");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
+
 
 
             // 3. Insert data into data base

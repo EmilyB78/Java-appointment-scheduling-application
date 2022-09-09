@@ -1,9 +1,11 @@
 package controller;
 
+import Access.AppointmentsAcc;
 import Access.ContactsAcc;
 import Access.CustomersAcc;
 import Access.UserAcc;
 import SQLDatabase.SQLDBConn;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -207,7 +209,38 @@ public class AppointmentsEditController implements Initializable {
             LocalDateTime end = LocalDateTime.of(startdate, endtime);
             //need to validate for business hours
             //need to validate for start before end
+            if(!start.isBefore(end)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Start time must be before end time.");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
             //validate for overlap based on cust Id
+            ObservableList<Appointments> alllist = AppointmentsAcc.getAllAppointments();
+            boolean overlap = false;
+            for(Appointments appointments:alllist) {
+                if (appointments.getCustomerID() != customers.getCustomerID()) {
+                    continue;
+                }
+                if(appointments.getAppointmentID() == id) {
+                    continue;
+                }
+                LocalDateTime astart = appointments.getStart();
+                LocalDateTime aend = appointments.getEnd();
+                if(astart.isAfter(start) && astart.isBefore(end))
+                    overlap = true;
+                else if(astart.equals(start) || aend.equals(end))
+                    overlap = true;
+                else if(aend.isAfter(start) && aend.isBefore(end))
+                    overlap = true;
+                else if(astart.isBefore(start) && aend.isAfter(end))
+                    overlap = true;
+
+            }
+            if(overlap){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "You have an overlapping appointment");
+                Optional<ButtonType> result = alert.showAndWait();
+                return;
+            }
 
 
             // 3. Insert data into data base

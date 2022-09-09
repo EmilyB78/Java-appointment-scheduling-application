@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class Main extends Application  {
     @Override
@@ -20,6 +21,7 @@ public class Main extends Application  {
 
 
     public static void main(String[] args) throws SQLException {
+        Locale.setDefault(new Locale("fr"));
         SQLDBConn.connection();
        launch(args);
         SQLDBConn.closeConnection();

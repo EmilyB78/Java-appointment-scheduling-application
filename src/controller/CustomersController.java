@@ -74,7 +74,8 @@ import static Access.CustomersAcc.getAllCustomers;
      @FXML
      void onActionDisplayMainMenuScreen(ActionEvent event) throws IOException {
          Parent one = FXMLLoader.load(getClass().getResource("/view/MainMenuScreen.fxml"));
-         Scene scene = new Scene(one);        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         Scene scene = new Scene(one);
+         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          stage.setScene(scene);
          stage.show();
      }
