@@ -20,7 +20,9 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-
+/**
+ * Class to control editing and saving customer data.
+ */
 public class CustomerEditController implements Initializable {
 
     private Customers customerToEdit;
@@ -76,7 +78,8 @@ public class CustomerEditController implements Initializable {
     }
 
     /**
-     * method to save customer data after it has been edited.
+     * Method to save customer data to database after it has been edited
+     * and transition user back to main customer screen
      * @param event
      */
 
@@ -169,7 +172,11 @@ public class CustomerEditController implements Initializable {
 
     }
 
-
+    /**
+     * Fill Combo Box with Country Information
+     * @param event
+     * @throws SQLException
+     */
 
      public void onActionCustomerCountryEdit(ActionEvent event) throws SQLException {
 
@@ -180,6 +187,10 @@ public class CustomerEditController implements Initializable {
 
     }
 
+    /**
+     * Method to send edited customer information to database.
+     * @param customersToModify
+     */
     public void sendCustomers(Customers customersToModify) {
 
 

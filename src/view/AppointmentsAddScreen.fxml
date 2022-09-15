@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="554.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsAddController">
+<AnchorPane prefHeight="554.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsAddController">
    <children>
       <GridPane fx:id="addAppointmentTable" layoutX="47.0" layoutY="104.0" prefHeight="394.0" prefWidth="224.0">
         <columnConstraints>
@@ -25,7 +25,7 @@
         </rowConstraints>
          <children>
             <Label text="ApptID" />
-            <TextField fx:id="addAppointmentID" editable="false" GridPane.columnIndex="1" />
+            <TextField fx:id="addAppointmentID" disable="true" editable="false" GridPane.columnIndex="1" />
             <TextField fx:id="addAppointmentTitle" layoutX="89.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="addAppointmentDescription" layoutX="89.0" layoutY="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="addAppointmentLocation" layoutX="89.0" layoutY="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />

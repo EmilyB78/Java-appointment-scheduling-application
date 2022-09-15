@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="413.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsEditController">
+<AnchorPane prefHeight="413.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsEditController">
    <children>
       <GridPane layoutX="46.0" layoutY="62.0" prefHeight="313.0" prefWidth="309.0">
         <columnConstraints>
@@ -41,7 +41,7 @@
             <DatePicker fx:id="editAppointmentStartDate" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <ComboBox fx:id="editAppointmentStartTime" prefHeight="25.0" prefWidth="171.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <ComboBox fx:id="editAppointmentEndTime" prefHeight="25.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextField fx:id="editAppointmentID" editable="false" GridPane.columnIndex="1" />
+            <TextField fx:id="editAppointmentID" disable="true" editable="false" GridPane.columnIndex="1" />
             <TextField fx:id="editAppointmentTitle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="editAppointmentDescription" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="editAppointmentLocation" GridPane.columnIndex="1" GridPane.rowIndex="3" />

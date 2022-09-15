@@ -46,6 +46,12 @@ import static Access.CustomersAcc.getAllCustomers;
     @FXML private Button deleteCustomer;
     @FXML private Button backtoMainMenu;
 
+     /**
+      * Class and method to control customer screen, diplay customer data,
+      * and all customers to be added or edited.
+      * @param url
+      * @param resourceBundle
+      */
      @Override
      public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -95,7 +101,7 @@ import static Access.CustomersAcc.getAllCustomers;
      }
 
      /**
-      * Method to go to screen to edit customer when
+      * Method to go to screen to edit customer when a customer is selected and button pressed.
       * @param event
       * @throws IOException
       */

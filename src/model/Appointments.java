@@ -6,6 +6,11 @@ import javafx.fxml.FXMLLoader;
 
 import java.time.LocalDateTime;
 
+/**
+ * Appointments class contains appointmentID, appointmentTitle,
+ * appointmentDescription, appointmentLocation, appointmentType, start date/time, end data/time.
+ * These values reflect needed appointment information. This class also contains setters and getters.
+ */
 public class Appointments {
 
     public static ObservableList<String> monthlist = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
@@ -33,45 +38,99 @@ public class Appointments {
         this.contactID = contactID;
     }
 
+    /**
+     *
+     * @return appointmentID
+     */
     public int getAppointmentID() {
         return appointmentID;
 
     }
+
+    /**
+     *
+     * @param appointmentID
+     */
     public void setAppointmentID(int appointmentID){
         this.appointmentID = appointmentID;
     }
 
+    /**
+     *
+     * @return appointmentTitle
+     */
+
     public String getAppointmentTitle(){
         return appointmentTitle;
     }
+
+    /**
+     *
+     * @return appointmnetDescription
+     */
     public String getAppointmentDescription(){
         return appointmentDescription;
     }
+
+    /**
+     *
+     * @return appointmentLocation
+     */
 
     public String getAppointmentLocation(){
         return appointmentLocation;
     }
 
+    /**
+     *
+     * @return appointmentType
+     */
+
     public String getAppointmentType(){
         return appointmentType;
     }
+
+    /**
+     *
+     * @return start
+     */
 
     public LocalDateTime getStart() {
         System.out.println("start" + start);
         return start;
     }
 
+    /**
+     *
+     * @return end
+     */
+
     public LocalDateTime getEnd() {
         return end;
     }
+
+    /**
+     *
+     * @return customerID
+     */
 
     public int getCustomerID() {
         return customerID;
     }
 
+    /**
+     *
+     * @return userID
+     */
+
     public int getUserID() {
         return userID;
     }
+
+    /**
+     *
+     * @return contactID
+     */
 
     public int getContactID() {
         return contactID;

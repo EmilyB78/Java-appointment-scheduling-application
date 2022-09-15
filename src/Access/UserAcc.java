@@ -6,7 +6,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.*;
 
+/**
+ * Class to obtain user data from database
+ */
 public class UserAcc {
+    /**
+     * Observable list of users from database
+     * @return
+     */
 
     public static ObservableList<User> getAllUsers(){
         ObservableList<User> ulist = FXCollections.observableArrayList();

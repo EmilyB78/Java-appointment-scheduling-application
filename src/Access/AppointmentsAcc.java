@@ -10,7 +10,14 @@ import model.Appointments;
 
 import java.sql.*;
 
+/**
+ * Class to obtain and filter appointments from database.
+ */
 public class AppointmentsAcc {
+    /**
+     * Observable list for all appointments in database
+     * @return
+     */
     public static ObservableList<Appointments> getAllAppointments() {
         ObservableList<Appointments> appointmentslist = FXCollections.observableArrayList();
         try {
@@ -36,6 +43,12 @@ public class AppointmentsAcc {
         }
         return appointmentslist;
     }
+
+    /**
+     * Observable list of appointments selected by contact_ID
+     * @param contactID
+     * @return
+     */
 
     public static ObservableList<Appointments> getAllAppointmentsbyContact(int contactID) {
         ObservableList<Appointments> appointmentslist = FXCollections.observableArrayList();
@@ -64,33 +77,29 @@ public class AppointmentsAcc {
         return appointmentslist;
     }
 
+    /**
+     * Lamba filters appointments based upon customer ID.
+     * @param customerid
+     * @return
+     */
+
+
     public static ObservableList<Appointments> getAllAppointmentsbyCustomers(int customerid) {
-        ObservableList<Appointments> appointmentslist = FXCollections.observableArrayList();
-        try {
-            String sql = "SELECT * from appointments where customer_ID = ?";
-            PreparedStatement ps = SQLDBConn.getConnection().prepareStatement(sql);
-            ps.setInt(1,customerid);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int appointmentID = rs.getInt("Appointment_ID");
-                String appointmentTitle = rs.getString("Title");
-                String appointmentDescription = rs.getString("Description");
-                String appointmentLocation = rs.getString("Location");
-                String appointmentType = rs.getString("Type");
-                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
-                int customerID = rs.getInt("Customer_ID");
-                int userID = rs.getInt("User_ID");
-                int contact_id = rs.getInt("Contact_ID");
-                Appointments A = new Appointments(appointmentID, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, start, end, customerID, userID, contact_id);
-                appointmentslist.add(A);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return appointmentslist;
+
+        ObservableList<Appointments> allappointments = getAllAppointments();
+        ObservableList<Appointments> customerappointments = allappointments.filtered(appt ->{
+            if (appt.getCustomerID()== customerid)
+                return true;
+            return false;
+        });
+        return customerappointments;
+
     }
 
+    /**
+     * Method filters appointments by distinct type.
+     * @return
+     */
     public static ObservableList<String> getAllAppointmentsbyType() {
         ObservableList<String> appointmentslist = FXCollections.observableArrayList();
         try {
@@ -110,6 +119,13 @@ public class AppointmentsAcc {
         return appointmentslist;
     }
 
+    /**
+     * Methoid to delete appointment from database.
+     * @param appointmentID
+     * @param connection
+     * @return
+     */
+
     public static int deleteAppointment(int appointmentID, Connection connection) {
         int result = 0;
         try {
@@ -123,6 +139,13 @@ public class AppointmentsAcc {
         }
         return result;
     }
+
+    /**
+     * Method to filer appointments according to type and month.
+     * @param month
+     * @param type
+     * @return
+     */
 
     public static String getmonthtypecount(String month, String type) {
 

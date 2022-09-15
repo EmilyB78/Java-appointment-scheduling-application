@@ -10,7 +10,15 @@ import model.StateProvince;
 
 import java.sql.*;
 
+/**
+ * Class to obtain First Level Division data from database.
+ */
 public class StateProvinceAcc {
+    /**
+     * Observable list of First Level Division Information
+     * @param countryID
+     * @return FirstLevelDivlist
+     */
     public static ObservableList<StateProvince> getAllFirstLevelDiv(int countryID){
         ObservableList<StateProvince> FirstLevelDivlist = FXCollections.observableArrayList();
         try {        String sql  = "SELECT * from first_level_divisions where Country_ID = ?";

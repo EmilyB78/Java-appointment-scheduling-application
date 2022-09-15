@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ *Class to obtain list of country data from database.
+ */
 public class CountryAcc {
 
     /**

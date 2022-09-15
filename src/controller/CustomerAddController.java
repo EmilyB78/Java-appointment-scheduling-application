@@ -25,13 +25,14 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Class to control adding and saving new customer data.
+ */
 public class CustomerAddController implements Initializable {
     private Customers customerToAdd;
 
     Stage stage;
     Parent scene;
-
-
 
     @FXML
     private TextField customerIDAdd;
@@ -70,11 +71,23 @@ public class CustomerAddController implements Initializable {
 
     }
 
+    /**
+     * Fill Combo Box with State/Province Information
+     * @param event
+     * @throws IOException
+     */
+
     public void onActionCustomerStateAdd (ActionEvent event) throws IOException {
 
         StringBuilder cs = new StringBuilder("");
 
     }
+
+    /**
+     * Fill Combo Box with Country Information
+     * @param event
+     * @throws IOException
+     */
     public void onActionCustomerCountryAdd (ActionEvent event) throws IOException {
 
         Countries c = customerCountryAdd.getValue();
@@ -83,6 +96,11 @@ public class CustomerAddController implements Initializable {
        customerStateAdd.setItems(StateProvinceAcc.getAllFirstLevelDiv(c.getCountryID()));
     }
 
+    /**
+     * Method to return to the main customer screen with button push.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionCustomerAddBack(ActionEvent event) throws IOException {
 
@@ -100,6 +118,13 @@ public class CustomerAddController implements Initializable {
             stage.show();
         }
     }
+
+    /**
+     * Method to save new customer data to database after it has been added
+     * and transition user back to main customer screen
+     * @param event
+     * @throws IOException
+     */
 
 
     @FXML

@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.Locale;
 
+/**
+ * Class creates an application for management of data selected from and added to database.
+ */
 public class Main extends Application  {
     @Override
     public void start (Stage stage) throws Exception{

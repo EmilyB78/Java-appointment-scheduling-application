@@ -1,6 +1,11 @@
  package model;
 
-public class Customers {
+ /**
+  * Customers class that contains customerID, customerName, customerAddress, customerPostalCode,
+  * customerPhonenumber, divisionID, divisionName, countryID, customerCountry. These values
+  * reflected needed customer information. Getters and setters are also included.
+  */
+ public class Customers {
 
 
     private int customerID;
@@ -25,41 +30,91 @@ public class Customers {
         this.customerCountry = customerCountry;
     }
 
+     /**
+      *
+      * @return customerID
+      */
+
     public int getCustomerID() {
         return customerID;
     }
+
+     /**
+      *
+      * @return customerName
+      */
 
     public String getCustomerName() {
         return customerName;
     }
 
+     /**
+      *
+      * @return customerAddress
+      */
+
     public String getCustomerAddress() {
         return customerAddress;
     }
+
+     /**
+      *
+      * @return customerPostalCode
+      */
 
     public String getCustomerPostalCode() {
         return customerPostalCode;
     }
 
+     /**
+      *
+      * @return customerPhonenumber
+      */
+
     public String getCustomerPhonenumber() {
         return customerPhonenumber;
     }
+
+     /**
+      *
+      * @return divisionID
+      */
 
     public int getDivisionID() {
         return divisionID;
     }
 
+     /**
+      *
+      * @return divisionName
+      */
+
     public String getDivisionName() {
         return divisionName;
     }
+
+     /**
+      *
+      * @return countryID
+      */
 
     public int getCountryID() {
         return countryID;
     }
 
+     /**
+      *
+      * @return customerCountry
+      */
+
     public String getCustomerCountry() {
         return customerCountry;
     }
+
+     /**
+      *
+      * @return String customerID
+      */
 
     @Override
     public String toString (){

@@ -29,6 +29,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+/**
+ * Class and methods control the appointments add screen.
+ */
 public class AppointmentsAddController implements Initializable {
 
     public ComboBox<Contacts> addAppointmentContact;
@@ -42,6 +45,13 @@ public class AppointmentsAddController implements Initializable {
     public TextField addAppointmentDescription;
     public TextField addAppointmentTitle;
 
+    /**
+     * Method to send new appointment data back to the main appointment screen controller
+     * where the new appointment is displayed. Time conversions are provided.
+     * @param url
+     * @param resourceBundle
+     */
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addAppointmentContact.setItems(ContactsAcc.getAllContacts());
@@ -51,9 +61,11 @@ public class AppointmentsAddController implements Initializable {
         LocalTime start = LocalTime.of(8, 0);
         LocalTime end = LocalTime.of(22, 0);
 
+
         //make a local date time with start, use local data.now
         LocalDate nydate = LocalDate.now();
-        LocalTime nytime = LocalTime.of(7,0);
+        LocalTime nytime = start;
+        LocalTime nyetime = end;
 
 
         //make a zoned date time from the local date time using atzone "America/New_York"
@@ -61,13 +73,18 @@ public class AppointmentsAddController implements Initializable {
 
         //make another zone date time from that zone date time using method with zone same instant
         ZonedDateTime nyZDT = ZonedDateTime.of(nydate, nytime, nyZoneId);
+        ZonedDateTime nyeZDT = ZonedDateTime.of(nydate, nyetime, nyZoneId);
 
         //use zone ID system default
         ZoneId LocalZoneId = ZoneId.of(TimeZone.getDefault().getID());
 
         //convert zoned date time to a local time
-        Instant nytotxInstant = nyZDT.toInstant();
+        //Instant nytotxInstant = nyZDT.toInstant();
         ZonedDateTime nytoLocalZDT = nyZDT.withZoneSameInstant(LocalZoneId);
+        ZonedDateTime nyetoLocalZDT = nyeZDT.withZoneSameInstant(LocalZoneId);
+
+         start = nytoLocalZDT.toLocalTime();
+         end = nyetoLocalZDT.toLocalTime();
 
 
 
@@ -79,6 +96,13 @@ public class AppointmentsAddController implements Initializable {
         }
 
     }
+
+    /**
+     * Method to verify the new appointment data is complete, check for appointment overlaps, send data
+     *  to database, and transition user back to main appointment screen. Alerts for missing information
+     *  or appointment overlap are provided.
+     * @param event
+     */
 
 
     public void onActionSaveAppointment(ActionEvent event) {
@@ -233,6 +257,12 @@ public class AppointmentsAddController implements Initializable {
         return;
     }
 
+    /**
+     * Method to return to the main appointment screen with button push.
+     * @param event
+     * @throws IOException
+     */
+
 
     public void onActionAppointmentsAddBack(ActionEvent event) throws IOException {
 
@@ -252,21 +282,5 @@ public class AppointmentsAddController implements Initializable {
 
 
     }
-
-
-    /// Reports: 1 count on appointments for month/type combo
-    // combo box for month names and combo box for types
-    // select a month, selct a type, put count in a label
-
-    // Report 2: schedule based on contact. need a combo box to choose contact
-    //need a table (like appointment table) to display the appointments
-
-    // Report 3: report of your choice. schedule based on customer
-    //need a combo box for customers, can use the same table to display appointments
-
-    // address time validation alerts/business hours
-
-    // week and month view on appointment screen, add all radio button
-
 
 }

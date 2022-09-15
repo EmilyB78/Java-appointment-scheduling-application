@@ -29,7 +29,11 @@ import model.Customers;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-
+/**
+ * Class and method to control main appointments screen, display appointment by month or week,
+ * allow users to choose to delete an appointment. User may also edit an existing appointment
+ * and add new appointments by button selection and transition to appropriate screens.
+ */
 public class AppointmentsController implements Initializable {
 
 
@@ -111,8 +115,7 @@ public class AppointmentsController implements Initializable {
     }
 
     /**
-     * This method is temporarily set to go back to the main menu
-     *
+     * Method to delete an appointment.
      * @param event
      * @throws IOException
      */
@@ -190,11 +193,8 @@ public class AppointmentsController implements Initializable {
 
 
     }
-
-
-
      /**
-      * method to go to screen to add a new appointment by button push
+      * Method to go to screen to add a new appointment by button push
       * @param event
       * @throws IOException
       */
@@ -209,16 +209,8 @@ public class AppointmentsController implements Initializable {
         window.show();
     }
 
-
-
-    /**
-     * Delete appointment on button press.
-     * @throws Exception
-     * @param event
-     */
-
      /**
-      * method to display custom message for errors and validation input
+      * Method to display custom message for errors and validation input
       * @param alertType
       */
     private void displayAlert(int alertType) {
@@ -243,16 +235,9 @@ public class AppointmentsController implements Initializable {
 
 
 
-    /**
-     * Load appointment data on click.
-     * Lambda #3 to fill the allContactNames observable list with contact information.
-     */
-
-
-
 
     /**
-     * When radio button for "Month" is selected.
+     * Displays appointment by month when radio button for "Month" is selected.
      * @throws SQLException
      */
     @FXML
@@ -281,7 +266,7 @@ public class AppointmentsController implements Initializable {
 
 
     /**
-     * When radio button for week is selected.
+     * Diplays appointments by week when radio button for week is selected.
      * @throws SQLException
      */
     @FXML
@@ -307,7 +292,27 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Method to reset appointment table to view all appointments
+     * after montly or weekly view was selected.
+     * @param event
+     */
 
+    public void viewAllAgain(ActionEvent event) {
+        ObservableList<Appointments> allAppointmentsList = getAllAppointments();
 
- }
+        appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        appointmentTitle.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
+        appointmentDescription.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
+        appointmentLocation.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
+        appointmentType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
+        appointmentStart.setCellValueFactory(new PropertyValueFactory<>("start"));
+        appointmentEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
+        appointmentCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        appointmentContact.setCellValueFactory(new PropertyValueFactory<>("ContactID"));
+        tableUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
+
+        allAppointmentsTable.setItems(allAppointmentsList);
+    }
+}
 

@@ -10,7 +10,14 @@ import model.Customers;
 
 import java.sql.*;
 
+/**
+ * Class to obtain list of customers from database.
+ */
 public class CustomersAcc {
+    /**
+     * Observable list for all customers in database
+     * @return
+     */
     public static ObservableList<Customers> getAllCustomers(){
         ObservableList<Customers> customerslist = FXCollections.observableArrayList();
         try {
@@ -39,11 +46,5 @@ public class CustomersAcc {
             throwables.printStackTrace();
         }        return customerslist;
     }
-
-    /**@Override
-    public String toString(){
-        return (customerCountry + Country)
-    }
-    **/
 
 }

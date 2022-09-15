@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/** * Class and methods to verify login, update login log,
+/**Class and methods to verify login, update login log,
  * and set locale/language based on operating system settings.
  */
 public class LoginController implements Initializable {
@@ -60,25 +60,28 @@ public class LoginController implements Initializable {
     private ResourceBundle dictionary = ResourceBundle.getBundle("language");
 
     /**
-     * *  Login button for main screen.
-     * * @param event
-     * * @throws SQLException
-     * * @throws IOException
-     * * @throws Exception
-     **/
+     * Class and method to control login screen, allow user access, and provider alerts.
+     * @param event
+     * @throws SQLException
+     * @throws IOException
+     * @throws Exception
+     */
     @FXML
     private void loginButton(ActionEvent event) throws SQLException, IOException, Exception {
 
-        // 1. Get the data from the GUI
+        /**
+         * Get user data from the GUI
+         */
+
         try {
 
             String name = loginScreenUsername.getText();
             String pass = loginScreenPassword.getText();
 
+            /**
+             * Validate the data and provider alerts if password or username is incorrect.
+             */
 
-            // 2. Validate the data
-            //Create a if else for language
-            //if language = en
             if (name.isBlank()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, dictionary.getString("blankuser"));
                 Optional<ButtonType> result = alert.showAndWait();
@@ -91,7 +94,14 @@ public class LoginController implements Initializable {
             }
 
 
-            // 3. Compare with data in data base
+            /**
+             * SqL query to compare user given data to database.
+             * Method to determine if login is valid and give access, amend report for successful login,
+             * and provide alerts regarding appointments within 15 minutes. If method determines login is invalid,
+             * alert of invalid login is given.
+             *
+              */
+
 
             String sql = "Select * from users where user_name = ? and password = ?";
 
@@ -103,8 +113,7 @@ public class LoginController implements Initializable {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                //the good case: successful login
-                //write valid login to file
+
                 try {
                     PrintWriter pw = new PrintWriter(new FileOutputStream(
                             new File("login_activity.txt"),
@@ -118,7 +127,6 @@ public class LoginController implements Initializable {
                 }
 
 
-                //need 15 minute alert based on user ID
                 int userID = rs.getInt("user_ID");
                 ObservableList<Appointments> alllist = AppointmentsAcc.getAllAppointments();
                 boolean appointfound = false;
@@ -129,7 +137,6 @@ public class LoginController implements Initializable {
                     }
 
                     LocalDateTime today = LocalDateTime.now();
-                    // if appointment start is > today, and appointment start is < today + 15 minutes
                     if(appointments.getStart().isAfter(today) && appointments.getStart().isBefore(today.plusMinutes(15))) {
                         appointfound = true;
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have an appointment coming up: " + appointments.getAppointmentID() + " at time " + appointments.getStart());
@@ -150,8 +157,7 @@ public class LoginController implements Initializable {
                 stage.show();
             }
             else {
-                //the bad case: no match
-                //write to a file
+
                 try {
                     PrintWriter pw = new PrintWriter(new FileOutputStream(
                             new File("login_activity.txt"),
@@ -177,37 +183,20 @@ public class LoginController implements Initializable {
     }
 
 
-
-        /**
-         * Initilize upon screen start. Get locale info and set text on fields.
-         * * @param url, rb
-         */
-        @Override
+    /**
+     * Method to obtain username and password while displaying information regarding locale
+     * @param url
+     * @param rb
+     */
+    @Override
         public void initialize (URL url, ResourceBundle rb){
             try {
                 Locale locale = Locale.getDefault();
                 ZoneId zone = ZoneId.systemDefault();
 
 
-                // loginScreenLocationField.setText(Locale.getDefault().getDisplayCountry());
+
                 loginScreenLocationField.setText(String.valueOf(zone));
-                /**
-                 if (locale != Locale.ENGLISH) {
-                 loginField.setText(dictionary.getString("Connexion"));
-                 usernameField.setText(dictionary.getString("nom d'utilisatuer"));
-                 passwordField.setText(dictionary.getString("le mot de passe"));
-                 loginButton.setText(dictionary.getString("Connexion"));
-                 cancelButtonField.setText(dictionary.getString("Sortir"));
-                 locationText.setText(dictionary.getString("Emplacement"));
-                 } else {
-                 loginField.setText(dictionary.getString("Login"));
-                 usernameField.setText(dictionary.getString("username"));
-                 passwordField.setText(dictionary.getString("password"));
-                 loginButton.setText(dictionary.getString("Login"));
-                 cancelButtonField.setText(dictionary.getString("Exit"));
-                 locationText.setText(dictionary.getString("Location"));
-                 }
-                 **/
                 loginField.setText(dictionary.getString("Login"));
                 usernameField.setText(dictionary.getString("username"));
                 passwordField.setText(dictionary.getString("password"));
@@ -224,7 +213,13 @@ public class LoginController implements Initializable {
         }
 
 
+    /**
+     * Method to exit program with button push
+     * @param event
+     */
     public void cancelButton(ActionEvent event) {
+
+        System.exit(0);
     }
 }
 

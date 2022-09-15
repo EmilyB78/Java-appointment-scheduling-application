@@ -52,6 +52,11 @@ public class ReportsController implements Initializable {
     public TableColumn custIDReports;
     public TableColumn userIDReports;
 
+    /**
+     * Class and method to control and display reports data.
+     * @param url
+     * @param resourceBundle
+     */
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -76,6 +81,10 @@ public class ReportsController implements Initializable {
 
     }
 
+    /**
+     * Method to prompt the user to select a contact for report display
+     * @param event
+     */
     public void onActionDisplayContactsSchedule(ActionEvent event) {
 
 
@@ -95,6 +104,11 @@ public class ReportsController implements Initializable {
 
     }
 
+    /**
+     * Method to prompt a user to select a customer for report display.
+     * @param event
+     */
+
     public void onActionDisplayCustomerSchedule(ActionEvent event) {
 
         Customers customers = customerCustomerScheduleReports.getValue();
@@ -113,6 +127,12 @@ public class ReportsController implements Initializable {
 
     }
 
+    /**
+     * Method to return to the main menu from the reports page.
+     * @param event
+     * @throws IOException
+     */
+
     public void onActionReportsBack(ActionEvent event) throws IOException {
 
         Parent one = FXMLLoader.load(getClass().getResource("/view/MainMenuScreen.fxml"));
@@ -121,6 +141,11 @@ public class ReportsController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    /**
+     * Method to display reports by month and type.
+     * @param event
+     */
 
     public void onActionViewMonthTypeReports(ActionEvent event) {
 

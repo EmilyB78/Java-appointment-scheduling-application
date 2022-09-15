@@ -14,18 +14,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.*;
+
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
+
+/**
+ * Class to control editing and saving appointment data.
+ */
 
 public class AppointmentsEditController implements Initializable {
 
@@ -53,11 +58,32 @@ public class AppointmentsEditController implements Initializable {
     @FXML
     private ComboBox<User>editAppointmentUserID;
 
-
+    /**
+     * lamba overrides display of customer ID combo box
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        Callback<ListView<Customers>, ListCell<Customers>> factory = lv -> new ListCell<Customers>() {
+        @Override
+        protected void updateItem(Customers item, boolean empty) {
+            super.updateItem(item, empty);
+            setText(empty ? "Nothing" : ("Use : " + item.getCustomerID()));
+         }
+        };
+        editAppointmentCustID.setCellFactory(factory);
+
+
+
     }
+
+    /**
+     * Method to send edited appointment data back to the main appointment screen controller
+     *  where the edited appointment is displayed. Time conversions are provided.
+     * @param appointmentsToModify
+     */
 
 
     public void sendAppointments(Appointments appointmentsToModify) {
@@ -74,6 +100,32 @@ public class AppointmentsEditController implements Initializable {
         LocalTime start = LocalTime.of(8, 0);
         LocalTime end = LocalTime.of(22, 0);
 
+
+        //make a local date time with start, use local data.now
+        LocalDate nydate = LocalDate.now();
+        LocalTime nytime = start;
+        LocalTime nyetime = end;
+
+
+        //make a zoned date time from the local date time using atzone "America/New_York"
+        ZoneId nyZoneId = ZoneId.of("America/New_York");
+
+        //make another zone date time from that zone date time using method with zone same instant
+        ZonedDateTime nyZDT = ZonedDateTime.of(nydate, nytime, nyZoneId);
+        ZonedDateTime nyeZDT = ZonedDateTime.of(nydate, nyetime, nyZoneId);
+
+        //use zone ID system default
+        ZoneId LocalZoneId = ZoneId.of(TimeZone.getDefault().getID());
+
+        //convert zoned date time to a local time
+        //Instant nytotxInstant = nyZDT.toInstant();
+        ZonedDateTime nytoLocalZDT = nyZDT.withZoneSameInstant(LocalZoneId);
+        ZonedDateTime nyetoLocalZDT = nyeZDT.withZoneSameInstant(LocalZoneId);
+
+        start = nytoLocalZDT.toLocalTime();
+        end = nyetoLocalZDT.toLocalTime();
+
+
         while (start.isBefore(end.plusSeconds(1))) {
             editAppointmentStartTime.getItems().add(start);
             editAppointmentEndTime.getItems().add(start);
@@ -88,6 +140,7 @@ public class AppointmentsEditController implements Initializable {
         editAppointmentEndTime.setValue((appointmentsToModify.getEnd().toLocalTime()));
 
         for (Customers c : editAppointmentCustID.getItems()) {
+
 
             if (c.getCustomerID() == appointmentsToModify.getCustomerID()) {
                 editAppointmentCustID.setValue(c);
@@ -110,6 +163,11 @@ public class AppointmentsEditController implements Initializable {
         }
     }
 
+    /**
+     * Method to exit back to main appointment screen with button press.
+     * @param event
+     * @throws IOException
+     */
 
         @FXML
         void onActionAppointmentsEditBack (ActionEvent event) throws IOException {
@@ -128,6 +186,13 @@ public class AppointmentsEditController implements Initializable {
                 stage.show();
             }
         }
+
+    /**
+     * Method to verify the edited appointment data is complete, check for appointment overlaps, send data
+     * to database, and transition user back to main appointment screen. Alerts for missing information
+     * or appointment overlap are provided.
+     * @param event
+     */
 
     public void onActionAppointmentsEditSave(ActionEvent event) {
 
@@ -150,7 +215,7 @@ public class AppointmentsEditController implements Initializable {
 
 
 
-            // 2. Validate the data
+
             if (customers == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer.");
                 Optional<ButtonType> result = alert.showAndWait();
@@ -207,8 +272,7 @@ public class AppointmentsEditController implements Initializable {
 
             LocalDateTime start = LocalDateTime.of(startdate,starttime);
             LocalDateTime end = LocalDateTime.of(startdate, endtime);
-            //need to validate for business hours
-            //need to validate for start before end
+
             if(!start.isBefore(end)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Start time must be before end time.");
                 Optional<ButtonType> result = alert.showAndWait();

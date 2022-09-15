@@ -8,4 +8,5 @@
         <Button layoutX="264.0" layoutY="167.0" mnemonicParsing="false" onAction="#onActionDisplayCustomers" text="Customers" />
         <Button layoutX="264.0" layoutY="214.0" mnemonicParsing="false" onAction="#onActionDisplayReports" text="Reports" />
       <Button layoutX="264.0" layoutY="126.0" mnemonicParsing="false" onAction="#onActionDisplayAppointments" text="Appointments" />
+      <Button layoutX="503.0" layoutY="347.0" mnemonicParsing="false" onAction="#onActionExit" text="Exit" />
     </children></AnchorPane>
