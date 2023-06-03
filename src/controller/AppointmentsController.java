@@ -145,7 +145,9 @@ public class AppointmentsController implements Initializable {
 
                 ps.execute();
 
-                Alert alertc = new Alert(Alert.AlertType.INFORMATION, "You have deleted " + appointmentsToDelete.getAppointmentID());
+                //Alert to show deleted appointment ID and type
+
+                Alert alertc = new Alert(Alert.AlertType.INFORMATION, "You have deleted appointment ID:  " + appointmentsToDelete.getAppointmentID() + "  Type: " + appointmentsToDelete.getAppointmentType());
                 Optional<ButtonType> resultc = alertc.showAndWait();
 
 
